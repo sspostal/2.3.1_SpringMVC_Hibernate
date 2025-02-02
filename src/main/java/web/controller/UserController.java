@@ -14,7 +14,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @Autowired()
+    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -25,8 +25,8 @@ public class UserController {
         return "users";
     }
 
-    @GetMapping("/{id}")
-    public String getUser (@PathVariable("id") long id, Model model) {
+    @GetMapping("/user")
+    public String getUser(@RequestParam("id") long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         return "user";
     }
@@ -46,19 +46,19 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable("id") long id) {
+    @PostMapping("/delete")
+    public String delete(@RequestParam("id") long id) {
         userService.removeUser(id);
         return "redirect:/";
     }
 
-    @GetMapping("edit/{id}")
-    public String updateUser(@PathVariable("id") long id, Model model) {
-        model.addAttribute(userService.getUserById(id));
+    @GetMapping("/edit")
+    public String updateUser(@RequestParam("id") long id, Model model) {
+        model.addAttribute("user", userService.getUserById(id));
         return "edit";
     }
 
-    @PatchMapping("/edit")
+    @PostMapping("/edit")
     public String update(@Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "edit";

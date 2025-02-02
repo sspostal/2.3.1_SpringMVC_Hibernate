@@ -22,8 +22,6 @@ public class User {
     private String surname;
 
     @Column(name = "age")
-    @Min(value = 0, message = "Age should be >= 0")
-    @Max(value = 127, message = "Age should be < 128")
     private byte age;
 
     @Column(name = "email")
